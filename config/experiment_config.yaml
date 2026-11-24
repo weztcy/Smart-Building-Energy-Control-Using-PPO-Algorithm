@@ -1,0 +1,75 @@
+# Konfigurasi Eksperimen Smart Building Energy Control Using PPO
+
+project:
+  name: "Smart Building Energy Control Using PPO"
+  description: "Kontrol energi gedung pintar berbasis Reinforcement Learning (PPO) untuk efisiensi HVAC dan kenyamanan termal"
+  seed: 42
+  eval_seeds: [42, 101, 2024]
+
+simulation:
+  time_step_minutes: 15       # 15 menit per time step
+  steps_per_hour: 4           # 4 step / jam
+  episode_days: 7             # 7 hari simulasi (672 steps) per episode
+  zone_area_m2: 120.0         # Luas zona kantor 120 m2
+  zone_height_m: 3.0          # Tinggi plafon 3.0 m (Volume = 360 m3)
+  
+building_thermal:
+  # Parameter RC lumped model
+  effective_heat_capacity_j_per_k: 1.2e7  # Kapasitas panas efektif (J/K) ~ 3.33 kWh/K
+  thermal_resistance_k_per_w: 0.0045     # Resistansi termal dinding & jendela (K/W) ~ UA = 222 W/K
+  solar_heat_gain_coeff: 0.45            # SHGC jendela
+  window_area_m2: 20.0                   # Luas kaca menghadap luar
+  internal_heat_per_person_w: 100.0      # Panas sensibel per penghuni (W)
+  equipment_base_power_w: 300.0          # Daya peralatan dasar (W)
+  equipment_occupied_power_w: 1200.0     # Daya peralatan kerja & lampu saat jam kerja (W)
+
+hvac:
+  max_cooling_power_w: 12000.0   # Kapasitas pendinginan termal maksimum 12 kW
+  cop_nominal: 3.5               # Nilai nominal Coefficient of Performance
+  cop_temp_coeff: 0.02           # Penurunan COP per derajat kenaikan Tout di atas 25 C
+  fan_power_w: 250.0             # Daya listrik kipas saat beroperasi (W)
+  cooling_efficiency: 0.95       # Efisiensi perpindahan panas evaporator
+  min_setpoint_c: 20.0           # Batas bawah setpoint (C)
+  max_setpoint_c: 26.0           # Batas atas setpoint (C)
+  default_setpoint_c: 23.0       # Setpoint default / netral (C)
+
+comfort:
+  # Standar kenyamanan termal ASHRAE 55 untuk ruang ber-AC
+  comfort_temp_min_c: 22.0       # Batas bawah suhu nyaman jam kerja (C)
+  comfort_temp_max_c: 25.0       # Batas atas suhu nyaman jam kerja (C)
+  unoccupied_temp_min_c: 18.0   # Batas bawah saat kosong (C)
+  unoccupied_temp_max_c: 28.0   # Batas atas saat kosong (C)
+  work_hour_start: 8            # Jam mulai kantor (08:00)
+  work_hour_end: 18             # Jam selesai kantor (18:00)
+  max_occupants: 25             # Kapasitas puncak penghuni
+
+reward:
+  # Komponen fungsi reward: R = - (w_energy * P_norm + w_comfort * Viol_norm + w_stability * ActDelta_norm)
+  weight_energy: 1.0            # Bobot penalti konsumsi energi
+  weight_comfort: 3.5           # Bobot penalti ketidaknyamanan termal (harus cukup kuat!)
+  weight_stability: 0.2         # Bobot penalti perubahan kontrol yang terlalu fluktuatif
+  energy_scale_factor: 5.0      # Faktor skala normalisasi daya listrik (kW)
+  comfort_power: 2.0            # Pangkat deviasi suhu (penalti kuadratik)
+
+rl_training:
+  total_timesteps: 100000       # Total langkah pelatihan (~148 episode 7-hari)
+  learning_rate: 0.0003
+  n_steps: 2048                 # Horizon rollout buffer
+  batch_size: 64                # Minibatch size untuk optimasi gradien PPO
+  n_epochs: 10                  # Epochs per PPO update
+  gamma: 0.99                   # Discount factor
+  gae_lambda: 0.95              # Generalized Advantage Estimation parameter
+  clip_range: 0.2               # PPO clipping epsilon
+  ent_coef: 0.005               # Koefisien entropi untuk eksplorasi
+  vf_coef: 0.5                  # Koefisien value function loss
+  max_grad_norm: 0.5            # Gradient clipping norm
+
+paths:
+  data_raw: "data/raw"
+  data_processed: "data/processed"
+  models_checkpoints: "models/checkpoints"
+  models_best: "models/best_model"
+  outputs_figures: "outputs/figures"
+  outputs_metrics: "outputs/metrics"
+  outputs_logs: "outputs/logs"
+  outputs_screenshots: "outputs/screenshots"

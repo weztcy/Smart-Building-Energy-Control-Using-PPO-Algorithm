@@ -1,0 +1,17 @@
+controller,scenario,total_energy_kwh,energy_kwh_std,avg_indoor_temp_c,comfort_violation_pct,degree_hours_c_h,total_reward,hvac_control_changes,peak_power_kw,energy_saving_vs_rule_based_pct
+PPO Agent,standard,270.17,1.0,24.84,7.92,0.92,-221.81,68,4.39,-4.61
+Rule-Based (Scheduled),standard,258.27,1.05,26.57,100.0,115.99,-3581.54,10,4.35,0.0
+Occupancy-Aware,standard,257.19,1.0,26.12,88.99,91.66,-2854.65,27,4.34,0.42
+Fixed Thermostat (22.5 C),standard,296.76,0.86,24.43,79.28,77.39,-2174.52,0,4.34,-14.9
+PPO Agent,heatwave,375.04,0.94,25.88,66.71,74.21,-2669.3,72,4.93,-4.52
+Rule-Based (Scheduled),heatwave,358.83,0.97,27.47,100.0,215.78,-11508.01,10,4.93,0.0
+Occupancy-Aware,heatwave,361.13,0.92,27.18,99.22,184.71,-9643.76,27,4.93,-0.64
+Fixed Thermostat (22.5 C),heatwave,391.73,0.88,25.21,88.99,160.58,-8065.95,0,4.93,-9.17
+PPO Agent,high_occupancy,274.05,1.18,24.92,21.37,4.56,-249.92,68,4.39,-4.37
+Rule-Based (Scheduled),high_occupancy,262.57,1.18,26.61,100.0,122.53,-3931.44,10,4.39,0.0
+Occupancy-Aware,high_occupancy,261.44,1.1,26.17,89.25,97.65,-3162.39,27,4.39,0.43
+Fixed Thermostat (22.5 C),high_occupancy,301.07,0.98,24.47,79.79,83.16,-2466.1,0,4.39,-14.66
+PPO Agent,weekend,225.97,0.6,24.25,0.0,0.0,-184.19,63,3.84,-8.31
+Rule-Based (Scheduled),weekend,208.63,0.47,26.15,90.78,68.68,-2389.21,10,3.58,0.0
+Occupancy-Aware,weekend,206.11,0.67,26.76,100.0,148.15,-5827.2,73,4.36,1.21
+Fixed Thermostat (22.5 C),weekend,250.2,0.57,24.08,71.04,34.63,-684.67,0,3.53,-19.93

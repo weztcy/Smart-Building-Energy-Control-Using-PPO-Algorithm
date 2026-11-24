@@ -1,0 +1,14 @@
+{
+  "python_version": "3.15.1 (tags/v3.15.1:c37e74c, Oct 21 2026, 06:24:08) [MSC v.1951 64 bit (AMD64)]",
+  "torch_version": "2.15.0+cpu",
+  "total_timesteps": 100000,
+  "total_episodes": 149,
+  "training_duration_seconds": 104.32,
+  "training_duration_minutes": 1.74,
+  "final_running_reward": -234.28865837895918,
+  "seed": 42,
+  "saved_model_paths": {
+    "final": "models/checkpoints\\ppo_final.zip",
+    "best": "models/best_model\\ppo_smart_building.zip"
+  }
+}
